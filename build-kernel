@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -rf AnyKernel3
-rm -rf Kneip*
+rm -rf *.zip
 rm -rf out
 git clone https://github.com/zclkkk/AnyKernel3.git
 cd AnyKernel3
