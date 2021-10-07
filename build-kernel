@@ -6,7 +6,7 @@ git clone https://github.com/zclkkk/AnyKernel3.git
 cd AnyKernel3
 rm -rf .git
 cd ..
-BOARD=cepheus
+BOARD=raphael
 CLANG_DIR=/home/zclkkk/clang
 export KBUILD_BUILD_USER="zclkkk"
 export KBUILD_BUILD_HOST="Server"
