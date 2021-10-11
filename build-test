@@ -1,12 +1,11 @@
 #!/bin/bash
 rm -rf AnyKernel3
 rm -rf *.zip
-rm -rf out
-git clone https://github.com/zclkkk/AnyKernel3.git --depth=1
+git clone https://github.com/zclkkk/AnyKernel3.git
 cd AnyKernel3
 rm -rf .git
 cd ..
-BOARD=raphael
+BOARD=cepheus
 CLANG_DIR=/home/zclkkk/clang
 export KBUILD_BUILD_USER="zclkkk"
 export KBUILD_BUILD_HOST="Server"
