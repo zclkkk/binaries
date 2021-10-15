@@ -1,6 +1,5 @@
 #!/bin/bash
 rm -rf AnyKernel3
-rm -rf *.zip
 rm -rf out
 git clone https://github.com/zclkkk/AnyKernel3.git --depth=1
 cd AnyKernel3
@@ -40,4 +39,5 @@ zipalign -v 4 ${VERSION}.zip ../${VERSION}_${BOARD}.zip
 cd ..
 transfer trs ${VERSION}_${BOARD}.zip
 rm -rf AnyKernel3
-rm -rf Kneip*
+rm -rf ${VERSION}_${BOARD}.zip
+rm -rf out
