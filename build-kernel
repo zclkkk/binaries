@@ -45,4 +45,4 @@ transfer trs ${VERSION}_${BOARD}.zip
 rm -rf AnyKernel3
 rm -rf ${VERSION}_${BOARD}.zip
 rm -rf out
-echo "We spent "$((end_seconds-start_seconds))"s building this kernel."
+echo -e "\033[32mWe spent "$((end_seconds-start_seconds))"s building this kernel.\033[0m"
