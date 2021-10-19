@@ -9,6 +9,7 @@ BOARD=raphael
 CLANG_DIR=/home/zclkkk/clang
 export KBUILD_BUILD_USER="zclkkk"
 export KBUILD_BUILD_HOST="Server"
+starttime=`date +'%Y-%m-%d %H:%M:%S'`
 export PATH=${CLANG_DIR}/bin:${PATH}
 args="                  ARCH=arm64 \
                         O=../out \
@@ -29,6 +30,9 @@ args="                  ARCH=arm64 \
 cd msm-4.14
 make ${args} ${BOARD}_defconfig
 make -j64 ${args}
+endtime=`date +'%Y-%m-%d %H:%M:%S'`
+start_seconds=$(date --date="$starttime" +%s);
+end_seconds=$(date --date="$endtime" +%s);
 cd ..
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
 cp out/arch/arm64/boot/dtbo.img AnyKernel3/
@@ -41,3 +45,4 @@ transfer trs ${VERSION}_${BOARD}.zip
 rm -rf AnyKernel3
 rm -rf ${VERSION}_${BOARD}.zip
 rm -rf out
+echo "We spent "$((end_seconds-start_seconds))"s building this kernel."
