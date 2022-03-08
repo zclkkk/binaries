@@ -1,48 +1,19 @@
-#!/bin/bash
-rm -rf AnyKernel3
-rm -rf out
-git clone https://github.com/zclkkk/AnyKernel3.git --depth=1
-cd AnyKernel3
-rm -rf .git
-cd ..
-BOARD=raphael
-CLANG_DIR=/home/zclkkk/clang
+CLANG_DIR=$HOME/toolchain/clang
 export KBUILD_BUILD_USER="zclkkk"
-export KBUILD_BUILD_HOST="Server"
-starttime=`date +'%Y-%m-%d %H:%M:%S'`
+export KBUILD_BUILD_HOST="workspace"
 export PATH=${CLANG_DIR}/bin:${PATH}
 args="                  ARCH=arm64 \
                         O=../out \
-                        CC=clang \
-                        AR=llvm-ar \
-                        NM=llvm-nm \
-                        OBJCOPY=llvm-objcopy \
-                        OBJDUMP=llvm-objdump \
-                        STRIP=llvm-strip \
-                        LD=ld.lld \
-                        HOSTCC=clang \
-                        HOSTLD=ld.lld \
-                        HOSTAR=llvm-ar \
-                        HOSTCXX=clang++ \
+                        CC=${CLANG_DIR}/bin/clang \
+                        AR=${CLANG_DIR}/bin/llvm-ar \
+                        NM=${CLANG_DIR}/bin/llvm-nm \
+                        OBJCOPY=${CLANG_DIR}/bin/llvm-objcopy \
+                        OBJDUMP=${CLANG_DIR}/bin/llvm-objdump \
+                        STRIP=${CLANG_DIR}/bin/llvm-strip \
+                        LD=${CLANG_DIR}/bin/ld.lld \
                         CLANG_TRIPLE=aarch64-linux-gnu- \
-                        CROSS_COMPILE=aarch64-linux-gnu- \
-                        CROSS_COMPILE_ARM32=arm-linux-gnueabi- "
-cd msm-4.14
-make ${args} ${BOARD}_defconfig
+                        CROSS_COMPILE=${HOME}/toolchain/aarch64-linux-android-4.9/bin/aarch64-linux-android- \
+                        CROSS_COMPILE_ARM32=${HOME}/toolchain/arm-linux-androideabi-4.9/bin/arm-linux-androideabi- "
+cd msm-5.4
+make ${args} lahaina_defconfig
 make -j64 ${args}
-endtime=`date +'%Y-%m-%d %H:%M:%S'`
-start_seconds=$(date --date="$starttime" +%s);
-end_seconds=$(date --date="$endtime" +%s);
-cd ..
-cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
-cp out/arch/arm64/boot/dtbo.img AnyKernel3/
-cd AnyKernel3
-VERSION="$(cat ../msm-4.14/arch/arm64/configs/${BOARD}_defconfig | grep "CONFIG_LOCALVERSION\=" | sed -r 's/.*"(.+)".*/\1/' | sed 's/^.//')"
-7z a -mx9 ${VERSION}.zip *
-zipalign -v 4 ${VERSION}.zip ../${VERSION}_${BOARD}.zip
-cd ..
-transfer trs ${VERSION}_${BOARD}.zip
-rm -rf AnyKernel3
-rm -rf ${VERSION}_${BOARD}.zip
-rm -rf out
-echo -e "\033[32mWe spent "$((end_seconds-start_seconds))"s building this kernel.\033[0m"
