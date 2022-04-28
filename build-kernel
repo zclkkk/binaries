@@ -14,6 +14,6 @@ args="                  ARCH=arm64 \
                         CLANG_TRIPLE=aarch64-linux-gnu- \
                         CROSS_COMPILE=${HOME}/toolchain/aarch64-linux-android-4.9/bin/aarch64-linux-android- \
                         CROSS_COMPILE_ARM32=${HOME}/toolchain/arm-linux-androideabi-4.9/bin/arm-linux-androideabi- "
-cd msm-5.4
-make ${args} lahaina_defconfig
+cd msm-4.19
+make ${args} nio_defconfig
 make -j64 ${args}
